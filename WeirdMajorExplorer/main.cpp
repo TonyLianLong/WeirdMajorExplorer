@@ -17,21 +17,44 @@
 
 using namespace std;
 
-int getDistance(const string &strA, const string &strB){
-    /*if(abs((int)(strA.length()-strB.length()))>1){
-        return -1;
-    }*/
-    if(strA.length() != strB.length()){
-        return -1;
-    }
-    int dif = 0;
-    for(int i = 0; i < strA.length(); i++){
-        if(strA[i]!=strB[i]){
-            dif++;
+bool isDiffedByOne(const string &strA, const string &strB){
+    if(strA.length() == strB.length()){
+        int dif = 0;
+        for(int i = 0; i < strA.length(); i++){
+            if(strA[i]!=strB[i]){
+                dif++;
+                if(dif > 1){
+                    return false;//too many unmatches
+                }
+            }
         }
+        return dif == 1;
+    }else if(strA.length() - strB.length() == 1){
+        int dif = 0;
+        for(int i = 0; i < strA.length(); i++){
+            if(strA[i+dif]!=strB[i]){
+                dif++;
+                if(dif > 1){
+                    return false;//too many unmatches
+                }
+                i--;//re-check the current letter
+            }
+        }
+        return dif == 1;
+    }else if(strB.length() - strA.length() == 1){
+        int dif = 0;
+        for(int i = 0; i < strB.length(); i++){
+            if(strB[i+dif]!=strA[i]){
+                dif++;
+                if(dif > 1){
+                    return false;//too many unmatches
+                }
+                i--;//re-check the current letter
+            }
+        }
+        return dif == 1;
     }
-    return dif;
-    //return getDistanceHelper(strA, strB, 0, (int)strA.length()-1, 0, (int)strB.length()-1);
+    return false;
 }
 
 string process(string str){
@@ -63,7 +86,7 @@ void computePossibleResult(string major, vector<string> &dict){
     istringstream majorStringStream(major);
     while(majorStringStream>>word){
         for(string wordInDict : dict){
-            if(getDistance(word, wordInDict) == 1){
+            if(isDiffedByOne(word, wordInDict)){
                 cout<<word<<" : "<<wordInDict<<endl;
             }
         }
