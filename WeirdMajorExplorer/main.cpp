@@ -87,7 +87,7 @@ void computePossibleResult(string major, vector<string> &dict){
     while(majorStringStream>>word){
         for(string wordInDict : dict){
             if(isDiffedByOne(word, wordInDict)){
-                cout<<word<<" : "<<wordInDict<<endl;
+                cout<<"The word \"" <<word<<"\" can be \""<<wordInDict<<"\"."<<endl;
             }
         }
     }
@@ -103,7 +103,7 @@ int main(int argc, const char * argv[]) {
         string originalMajor = majors[i];
         string major = process(originalMajor);
         //cout << major << endl;
-        cout << "Possible result for " << originalMajor << ":" << endl;
+        cout << "Possible new \"majors\" for " << originalMajor << ":" << endl;
         computePossibleResult(major, dict);
         cout << endl;
     }
